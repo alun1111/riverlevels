@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net;
 
 using Amazon.Lambda.Core;
+using System.Text.RegularExpressions;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -32,16 +33,26 @@ namespace RiverLevels
             string[] tempStr;
 
             tempStr = fileList.Split(',');
+            var dateRegex = new Regex("\\d{1,2}\\/\\d{1,2}\\/\\d{4}");
+            var levelRegex = new Regex("^[0-9]{1,11}(?:\.[0-9]{1,3})");
+
+            var levelsDict = new Dictionary<string, string>();
 
             foreach (string item in tempStr)
             {
-                if (!string.IsNullOrWhiteSpace(item))
+                // if matches date regex, add to key part
+                if (dateRegex.IsMatch(item))
                 {
-                    splitted.Add(item);
+
+
+                }
+                // if matches levels, add to value part
+                if (dateRegex.IsMatch(item))
+                {
+
                 }
             }
 
-            splitted.RemoveRange(0, 8);
 
 
             //var client = new AmazonDynamoDBClient();
