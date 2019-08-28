@@ -38,12 +38,12 @@ If already installed check if new version is available.
 
 Execute unit tests
 ```
-    cd "RiverLevels/test/RiverLevels.Tests"
+    cd "BlueprintBaseName/test/BlueprintBaseName.Tests"
     dotnet test
 ```
 
 Deploy function to AWS Lambda
 ```
-    cd "RiverLevels/src/RiverLevels"
+    cd "BlueprintBaseName/src/BlueprintBaseName"
     dotnet lambda deploy-function
 ```
