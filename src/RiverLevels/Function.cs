@@ -9,6 +9,7 @@ using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.Lambda.Core;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -17,14 +18,13 @@ namespace RiverLevels
 {
     public class Function
     {
-        
         /// <summary>
         /// A simple function that takes a string and does a ToUpper
         /// </summary>
         /// <param name="input"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public void FunctionHandler(string input, ILambdaContext context)
+        public void FunctionHandler(ILambdaContext context)
         {
             var url = "http://apps.sepa.org.uk/database/riverlevels/14869-SG.csv";
             //var url = "http://mid-calder-weather.s3-website.eu-west-2.amazonaws.com/test/14869-SG.csv";
@@ -52,7 +52,7 @@ namespace RiverLevels
             }
         }
 
-        private Dictionary<DateTime, double>  ExtractLevels(string levels)
+        private Dictionary<DateTime, double> ExtractLevels(string levels)
         {
             var outputDict = new Dictionary<DateTime, double>();
 
@@ -75,7 +75,7 @@ namespace RiverLevels
                     var measurementDateTime = split[0];
                     var measurement = split[1];
 
-                    outputDict.Add(DateTime.Parse(measurementDateTime), double.Parse(measurement));
+                    outputDict.Add(DateTime.Parse(measurementDateTime, new CultureInfo("en-GB")), double.Parse(measurement));
                 }
             }
 
