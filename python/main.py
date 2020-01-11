@@ -6,11 +6,12 @@ import json
 from datetime import datetime
 from decimal import Decimal
 
-aws_db = boto3.resource('dynamodb', region_name="eu-west-1")
+aws_session = boto3.Session(region_name = 'eu-west-1')
+aws_db = aws_session.resource('dynamodb')
 table = aws_db.Table('river-level-readings')
 
 # Get river levels csv
-r = httpx.get('http://mid-calder-weather.s3-website.eu-west-2.amazonaws.com/test/14869-SG.csv')
+r = httpx.get('http://apps.sepa.org.uk/database/riverlevels/14869-SG.csv')
 
 content = r.text.splitlines()
 
@@ -20,14 +21,15 @@ with table.batch_writer(overwrite_by_pkeys=['monitoring-station-id', 'timestamp'
         if line_count > 6:
             row = line.split(',')
 
+            dt = datetime.strptime(row[0],"%d/%m/%Y %H:%M:%S")
+            timestamp = dt.strftime( '%Y-%m-%d %H:%M:%S')
             data = json.loads(json.dumps({
                         'monitoring-station-id': "14869-SG",
-                        'timestamp': row[0],
+                        'timestamp': timestamp,
                         'depth': round(float(row[1]), 2)}), parse_float=Decimal)
 
-            # Write to dynamodb table
+            # Add to dynamodb table put batch
             batch.put_item(Item=data) 
-            print(data)
 
             line_count += 1
         else:
