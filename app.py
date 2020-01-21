@@ -1,4 +1,4 @@
-import httpx
+import requests
 import boto3
 import json
 from datetime import datetime
@@ -10,7 +10,7 @@ def lambda_handler(event, context):
     table = aws_db.Table('river-level-readings')
 
     # Get river levels csv
-    r = httpx.get('http://apps.sepa.org.uk/database/riverlevels/14869-SG.csv')
+    r = requests.get('http://apps.sepa.org.uk/database/riverlevels/14869-SG.csv')
 
     content = r.text.splitlines()
 

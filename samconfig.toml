@@ -2,9 +2,9 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "house-dashboard-app"
+stack_name = "river-levels-app"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1qvvkrufd6zeg"
-s3_prefix = "house-dashboard-app"
+s3_prefix = "river-levels-app"
 region = "eu-west-1"
-confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
+

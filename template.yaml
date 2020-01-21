@@ -5,7 +5,7 @@ Resources:
   riverlevelsreader:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: river-levels-reader.app.lambda_handler
+      Handler: app.lambda_handler
       Runtime: python3.8
       CodeUri: .
       Description: ''
