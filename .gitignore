@@ -48,3 +48,4 @@ pyvenv.cfg
 pip-selfcheck.json
 
 .aws-sam
+.aws

@@ -35,6 +35,6 @@ Then I reorganised my repo to look like the correct AWS deployment tree, which d
 
 After some faffing around with python (windows was hijacking python on the path to open the windows store!!) i got the buld to work fine.
 
-However then I kept getting a error where the wrong role ARN was being used by `sam deploy --guided`! Gah! Then I noticed that there was an extension for vscode, so gave that a go.
+However then I kept getting a error where the wrong role ARN was being used by `sam deploy --guided`! Gah! Then I noticed that there was an extension for vscode, so gave that a go but no dice.
 
 > 🐱‍👤 It turned out it was using my default credentials, which i had set to a user with minimal permissions... doh!

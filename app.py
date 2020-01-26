@@ -11,6 +11,7 @@ def lambda_handler(event, context):
 
     # Get river levels csv
     r = requests.get('http://apps.sepa.org.uk/database/riverlevels/14869-SG.csv')
+    print('SEPA response status: ' + str(r.status_code))
 
     content = r.text.splitlines()
 
@@ -33,3 +34,8 @@ def lambda_handler(event, context):
                 line_count += 1
             else:
                 line_count += 1
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps('River-levels lambda has run!')
+    }
