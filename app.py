@@ -25,11 +25,13 @@ def getRiver(table, riverid):
                             'depth': round(float(row[1]), 2)}), parse_float=Decimal)
 
                 # Add to dynamodb table put batch
-                batch.put_item(Item=data) 
+                batch.put_item(Item=data)
 
                 line_count += 1
             else:
                 line_count += 1
+
+    print("Batch writing complete")
 
 def lambda_handler(event, context):
     aws_session = boto3.Session(region_name = 'eu-west-1')
