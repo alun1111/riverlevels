@@ -7,6 +7,7 @@ Use venv on your python project
 ```bash
 python3 -m venv /path/to/new/virtual/env
 ```
+
 > 🐱‍👤 Don't forget to activate it by running .\Scripts\activate!!
 
 Install PIP dependencies
