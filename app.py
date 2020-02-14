@@ -4,13 +4,9 @@ import json
 from datetime import datetime
 from decimal import Decimal
 
-def lambda_handler(event, context):
-    aws_session = boto3.Session(region_name = 'eu-west-1')
-    aws_db = aws_session.resource('dynamodb')
-    table = aws_db.Table('river-level-readings')
-
+def getRiver(riverid):
     # Get river levels csv
-    r = requests.get('http://apps.sepa.org.uk/database/riverlevels/14869-SG.csv')
+    r = requests.get(f'http://apps.sepa.org.uk/database/riverlevels/{riverid}.csv')
     print('SEPA response status: ' + str(r.status_code))
 
     content = r.text.splitlines()
@@ -24,7 +20,7 @@ def lambda_handler(event, context):
                 dt = datetime.strptime(row[0],"%d/%m/%Y %H:%M:%S")
                 timestamp = dt.strftime( '%Y-%m-%d %H:%M:%S')
                 data = json.loads(json.dumps({
-                            'monitoring-station-id': "14869-SG",
+                            'monitoring-station-id': riverid,
                             'timestamp': timestamp,
                             'depth': round(float(row[1]), 2)}), parse_float=Decimal)
 
@@ -35,6 +31,15 @@ def lambda_handler(event, context):
             else:
                 line_count += 1
 
+def lambda_handler(event, context):
+    aws_session = boto3.Session(region_name = 'eu-west-1')
+    aws_db = aws_session.resource('dynamodb')
+    table = aws_db.Table('river-level-readings')
+
+    getRiver("14869-SG") #almondell
+    getRiver("14867-SG") #whitburn
+    getRiver("14881-SG") #craigihall
+    
     return {
         'statusCode': 200,
         'body': json.dumps('River-levels lambda has run!')
