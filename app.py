@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from decimal import Decimal
 
-def getRiver(riverid):
+def getRiver(table, riverid):
     # Get river levels csv
     r = requests.get(f'http://apps.sepa.org.uk/database/riverlevels/{riverid}.csv')
     print('SEPA response status: ' + str(r.status_code))
@@ -36,9 +36,11 @@ def lambda_handler(event, context):
     aws_db = aws_session.resource('dynamodb')
     table = aws_db.Table('river-level-readings')
 
-    getRiver("14869-SG") #almondell
-    getRiver("14867-SG") #whitburn
-    getRiver("14881-SG") #craigihall
+    riverid = event.get('riverid')
+
+    getRiver(table, riverid) #almondell
+    # getRiver(table, "14867-SG") #whitburn
+    # getRiver(table, "14881-SG") #craigihall
     
     return {
         'statusCode': 200,

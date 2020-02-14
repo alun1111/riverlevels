@@ -1,4 +1,6 @@
 from app import lambda_handler
 
 print("Starting function...")
-lambda_handler("", "")
+
+event = { 'riverid': '14867-SG'}
+lambda_handler(event, "")
