@@ -49,3 +49,21 @@ However then I kept getting a error where the wrong role ARN was being used by `
 After much messing around, it turned out a flat directory layout is just fine. The SAM tool searches for a requirements.txt and resolves the dependencies. It also uses the `template.yaml` file to grab lambda settings. In this case i exported from an existing lambda function.
 
 Another cool thing is the SAM tool can deploy locally if you have a docker daemon running, which I don't. But it sounds like a good way to do it.
+
+## How to build and deploy
+
+Run `sam build` and then `sam deploy --guided` accepting all defaults. I'm not sure if you need the virtualenv running or not, but you definately need the `requirements.txt`.
+
+Whatever triggers the lambda must send a riverid in JSON, for example:
+
+```json
+{ "riverid": "12345-SG" }
+```
+
+Currently I am using a Cloudwatch schedule rule to run the lambda for three different stations on the river Almond.
+
+```text
+Almondell (14869-SG)
+Whitburn (14867-SG)
+Cragiehall (14881-SG)
+```
