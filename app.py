@@ -7,7 +7,11 @@ from decimal import Decimal
 def getRiver(table, riverid):
     # Get river levels csv
     r = requests.get(f'http://apps.sepa.org.uk/database/riverlevels/{riverid}.csv')
-    print('SEPA response status: ' + str(r.status_code))
+
+    if r.status_code != 200:
+        return print(f'Bad SEPA response status: {str(r.status_code)}')
+
+    print('Successful SEPA response...')
 
     content = r.text.splitlines()
 
@@ -40,9 +44,7 @@ def lambda_handler(event, context):
 
     riverid = event.get('riverid')
 
-    getRiver(table, riverid) #almondell
-    # getRiver(table, "14867-SG") #whitburn
-    # getRiver(table, "14881-SG") #craigihall
+    getRiver(table, riverid) 
     
     return {
         'statusCode': 200,
