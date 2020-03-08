@@ -6,7 +6,8 @@ from decimal import Decimal
 
 def getRiver(table, riverid):
     # Get river levels csv
-    r = requests.get(f'http://apps.sepa.org.uk/database/riverlevels/{riverid}.csv')
+    # r = requests.get(f'http://apps.sepa.org.uk/database/riverlevels/{riverid}.csv')
+    r = requests.get(f'https://www2.sepa.org.uk/waterlevels/CSVs/{riverid}.csv')
     print('SEPA response status: ' + str(r.status_code))
 
     content = r.text.splitlines()
