@@ -10,6 +10,11 @@ def getRiver(table, riverid):
     r = requests.get(f'https://www2.sepa.org.uk/waterlevels/CSVs/{riverid}.csv')
     print('SEPA response status: ' + str(r.status_code))
 
+    if r.status_code != 200:
+        return print(f'Bad SEPA response status: {str(r.status_code)}')
+
+    print('Successful SEPA response...')
+
     content = r.text.splitlines()
 
     line_count = 0
@@ -41,9 +46,7 @@ def lambda_handler(event, context):
 
     riverid = event.get('riverid')
 
-    getRiver(table, riverid) #almondell
-    # getRiver(table, "14867-SG") #whitburn
-    # getRiver(table, "14881-SG") #craigihall
+    getRiver(table, riverid) 
     
     return {
         'statusCode': 200,
