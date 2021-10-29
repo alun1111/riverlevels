@@ -22,6 +22,13 @@ Generate requirements.txt
 pip freeze > requirements.txt
 ```
 
+Activate venv and restore from requirements
+
+```
+. ./bin/activate
+pip install -r requirements.txt -v
+```
+
 ## Thrashing around without a clue in the AWS ecosphere
 
 I downloaded the `template.yaml` from the Lambda console as I had already created the function and hoped this would make things easier.
