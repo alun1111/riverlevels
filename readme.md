@@ -24,9 +24,15 @@ pip freeze > requirements.txt
 
 Activate venv and restore from requirements
 
-```
+```bash
 . ./bin/activate
 pip install -r requirements.txt -v
+```
+
+Test lambda with sam
+
+```bash
+sam lambda invoke
 ```
 
 ## Thrashing around without a clue in the AWS ecosphere
@@ -60,6 +66,8 @@ Another cool thing is the SAM tool can deploy locally if you have a docker daemo
 ## How to build and deploy
 
 Run `sam build` and then `sam deploy --guided` accepting all defaults. I'm not sure if you need the virtualenv running or not, but you definately need the `requirements.txt`.
+
+If the template file has already been created use `sam deploy -t template.yaml`
 
 Whatever triggers the lambda must send a riverid in JSON, for example:
 
